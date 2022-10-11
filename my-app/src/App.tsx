@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import { json } from 'stream/consumers';
+import { makeStyles } from '@mui/material';
+import Paper from '@mui/material/';
+import Grid from '@mui/material/Grid';
+
+
 import $ from 'jquery';
 import './App.css';
 
@@ -22,7 +27,7 @@ const App = () => {
       <h1>Google Book Search</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <input type='text'
+          <input className='search' type='text'
             placeholder='Book Search'
             onChange={(event) => {
               setBook(event.target.value.replace(' ', '+'));
@@ -32,17 +37,24 @@ const App = () => {
         <br />
         <br />
       </form>
-      {result.map(items => (
-        <div className='grid-container'>
-          <div className='grid-item'>
-            <img src={items.volumeInfo.imageLinks.thumbnail} alt={items.volumeInfo.title} />
-            <p>{items.volumeInfo.title}</p>
-            <p>{items.volumeInfo.authors}</p>
-            <p>{items.volumeInfo.description.substring(0, 300) + '...'}</p>
-            <a href={items.volumeInfo.previewLink}>Link</a>
-          </div>
-        </div>
-      ))}
+      <div className='grid-style'>
+      <Grid  container spacing={3}>
+        {result.map(items => (
+          <Grid className='card' item xs={12} sm={6} md={3}>
+            <div>
+              <div>
+            <img className='image-style' src={items.volumeInfo.imageLinks.thumbnail} alt={items.volumeInfo.title} />
+            </div>
+            <p className='title-style'>{items.volumeInfo.title}</p>
+            <p className='author-style'>{items.volumeInfo.authors}</p>
+            <p className='description-style'>{items.volumeInfo.description.substring(0, 300) + '...'}</p>
+            <a className='link-button' href={items.volumeInfo.previewLink}>Get Book</a>
+            </div>
+          </Grid>
+        ))}
+      </Grid>
+      </div>
+
     </div>
   );
 }
